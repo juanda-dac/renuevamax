@@ -26,15 +26,15 @@ export const saveProduct = async (req, res) => {
     const { ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado } = req.body;
     const connection = await getConnection();
     const result = await connection.query("INSERT INTO productos (ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado]);
-    return res.json({ message: "Producto guardado", id: result.insertId });
+    return res.json({ message: "Producto guardado", id: result.insertId, result });
 }
 
 export const updateProduct = async (req, res) => {
     const { productId } = req.params;
     const { ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado } = req.body;
     const connection = await getConnection();
-    await connection.query("UPDATE productos SET ProductoNombre = ?, ProveedorID = ?, CategoriaID = ?, CantidadPorUnidad = ?, PrecioUnitario = ?, UnidadesStock = ?, UnidadesPedidas = ?, NivelReorden = ?, Discontinuado = ? WHERE ProductoID = ?", [ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado, productId]);
-    return res.json({ message: "Producto actualizado" });
+    const result = await connection.query("UPDATE productos SET ProductoNombre = ?, ProveedorID = ?, CategoriaID = ?, CantidadPorUnidad = ?, PrecioUnitario = ?, UnidadesStock = ?, UnidadesPedidas = ?, NivelReorden = ?, Discontinuado = ? WHERE ProductoID = ?", [ProductoNombre, ProveedorID, CategoriaID, CantidadPorUnidad, PrecioUnitario, UnidadesStock, UnidadesPedidas, NivelReorden, Discontinuado, productId]);
+    return res.json({ message: "Producto actualizado", result });
 }
 
 export const deleteProduct = async (req, res) => {

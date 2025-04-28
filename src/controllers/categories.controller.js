@@ -54,15 +54,9 @@ export const updateCategory = async(req, res) => {
 
 export const deleteCategory = async(req, res) => {
     const { categoryId } = req.params;
-    try {
-        const connection = await getConnection();
-        await connection.query(`DELETE FROM categorias WHERE CategoriaID = ${categoryId}`)
-        return res.json({
-            message: "Categoria eliminada"
-        })
-    } catch (error) {
-        return res.json({
-            message: "Error al eliminar en la base de datos"
-        }, 500)
-    }
+    const connection = await getConnection();
+    await connection.query(`DELETE FROM categorias WHERE CategoriaID = ${categoryId}`)
+    return res.json({
+        message: "Categoria eliminada"
+    })
 }
